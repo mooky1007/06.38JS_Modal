@@ -1,77 +1,88 @@
 <style>
-.inner_body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 400px;
-    padding: 50px 0;
-    background: #222;
-    font-family: 'Poppins', sans-serif;
-    position: relative;
-}
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        background: #222;
+        font-family: 'Poppins', sans-serif;
+        position: relative;
+    }
 
-.modal_container {
-    display: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-}
+    .inner_body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 400px;
+        padding: 50px 0;
+        background: #222;
+        font-family: 'Poppins', sans-serif;
+        position: relative;
+    }
 
-.modal_wrapper {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 40px;
-    width: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
+    .modal_container {
+        display: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
 
-.modal_header {
-    margin-bottom: auto;
-}
+    .modal_wrapper {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 40px;
+        width: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
 
-.modal_header h3 {
-    margin: 0;
-    padding: 0;
-    font-size: 14px;
-    color: #111;
-}
+    .modal_header {
+        margin-bottom: auto;
+    }
 
-.modal_body p {
-    font-size: 12px;
-    color: #555;
-}
+    .modal_header h3 {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        color: #111;
+    }
 
-.modal_button_wrap button {
-    background: tomato;
-    color: #fff;
-    border: none;
-    border-radius: 100px;
-    padding: 5px 15px;
-    cursor: pointer;
-}
+    .modal_body p {
+        font-size: 12px;
+        color: #555;
+    }
 
-button[data-modal-id] {
-    border: 1px solid #ddd;
-    color: #ddd;
-    background-color: transparent;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin: 0 10px;;
-}
+    .modal_button_wrap button {
+        background: tomato;
+        color: #fff;
+        border: none;
+        border-radius: 100px;
+        padding: 5px 15px;
+        cursor: pointer;
+    }
 
+    button[data-modal-id] {
+        border: 1px solid #ddd;
+        color: #ddd;
+        background-color: transparent;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin: 0 10px;
+        ;
+    }
 </style>
 
 <script>
-    
+
 </script>
 
 <div class="inner_body">
@@ -108,42 +119,42 @@ button[data-modal-id] {
 </div>
 
 <script>
-class Modal {
-    constructor(target) {
-        if(typeof target === 'string'){
-            this.target = document.querySelector(target);
-        }else{
-            this.target = target;
+    class Modal {
+        constructor(target) {
+            if (typeof target === 'string') {
+                this.target = document.querySelector(target);
+            } else {
+                this.target = target;
+            }
+
+            this.opend = false;
+            this.init();
         }
 
-        this.opend = false;
-        this.init();
-    }
-
-    init() {
-        this.target.querySelector('.modal_button_wrap button').addEventListener('click', () => { this.close(); });
-    }
-
-    open() {
-        if(this.opend){
-            this.close();
-            return;
+        init() {
+            this.target.querySelector('.modal_button_wrap button').addEventListener('click', () => { this.close(); });
         }
-        this.target.style.display = 'flex';
-        this.opend = true;
+
+        open() {
+            if (this.opend) {
+                this.close();
+                return;
+            }
+            this.target.style.display = 'flex';
+            this.opend = true;
+        }
+
+        close() {
+            this.target.style.display = 'none';
+            this.opend = false;
+        }
     }
 
-    close() {
-        this.target.style.display = 'none';
-        this.opend = false;
-    }
-}
-
-const modalContainers = document.querySelectorAll('.modal_container');
-modalContainers.forEach((modalContainer) => {
-    const modal = new Modal(modalContainer);
-    const modalId = modalContainer.getAttribute('data-modal-id');
-    const modalBtn = document.querySelector(`[data-modal-id="${modalId}"]`);
-    modalBtn.addEventListener('click', () => { modal.open(); });
-});
+    const modalContainers = document.querySelectorAll('.modal_container');
+    modalContainers.forEach((modalContainer) => {
+        const modal = new Modal(modalContainer);
+        const modalId = modalContainer.getAttribute('data-modal-id');
+        const modalBtn = document.querySelector(`[data-modal-id="${modalId}"]`);
+        modalBtn.addEventListener('click', () => { modal.open(); });
+    });
 </script>
