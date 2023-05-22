@@ -1,0 +1,149 @@
+<style>
+.inner_body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 400px;
+    padding: 50px 0;
+    background: #222;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+.modal_container {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal_wrapper {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 40px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal_header {
+    margin-bottom: auto;
+}
+
+.modal_header h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: #111;
+}
+
+.modal_body p {
+    font-size: 12px;
+    color: #555;
+}
+
+.modal_button_wrap button {
+    background: tomato;
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+button[data-modal-id] {
+    border: 1px solid #ddd;
+    color: #ddd;
+    background-color: transparent;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 0 10px;;
+}
+
+</style>
+
+<script>
+    
+</script>
+
+<div class="inner_body">
+    <button type="button" data-modal-id="modalA">Modal A Open</button>
+    <button type="button" data-modal-id="modalB">Modal B Open</button>
+
+    <div class="modal_container" data-modal-id="modalA">
+        <div class="modal_wrapper">
+            <div class="modal_header">
+                <h3>Modal A</h3>
+            </div>
+            <div class="modal_body">
+                <p>modal a content text</p>
+            </div>
+            <div class="modal_button_wrap">
+                <button type="button">Clode</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal_container" data-modal-id="modalB">
+        <div class="modal_wrapper">
+            <div class="modal_header">
+                <h3>Modal B</h3>
+            </div>
+            <div class="modal_body">
+                <p>modal b content text</p>
+            </div>
+            <div class="modal_button_wrap">
+                <button type="button">Clode</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+class Modal {
+    constructor(target) {
+        if(typeof target === 'string'){
+            this.target = document.querySelector(target);
+        }else{
+            this.target = target;
+        }
+
+        this.opend = false;
+        this.init();
+    }
+
+    init() {
+        this.target.querySelector('.modal_button_wrap button').addEventListener('click', () => { this.close(); });
+    }
+
+    open() {
+        if(this.opend){
+            this.close();
+            return;
+        }
+        this.target.style.display = 'flex';
+        this.opend = true;
+    }
+
+    close() {
+        this.target.style.display = 'none';
+        this.opend = false;
+    }
+}
+
+const modalContainers = document.querySelectorAll('.modal_container');
+modalContainers.forEach((modalContainer) => {
+    const modal = new Modal(modalContainer);
+    const modalId = modalContainer.getAttribute('data-modal-id');
+    const modalBtn = document.querySelector(`[data-modal-id="${modalId}"]`);
+    modalBtn.addEventListener('click', () => { modal.open(); });
+});
+</script>
